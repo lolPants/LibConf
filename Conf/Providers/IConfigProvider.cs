@@ -14,10 +14,18 @@ namespace LibConf.Providers
         /// Used in file paths.
         /// </summary>
         string Name { get; }
+
         /// <summary>
         /// Full filepath to config store.
         /// </summary>
         string Filepath { get; }
+
+        /// <summary>
+        /// Strict Mode
+        /// <br />
+        /// Enabling strict mode will throw errors when reading invalid types
+        /// </summary>
+        bool StrictMode { get; set; }
         #endregion
 
         #region IO

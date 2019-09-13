@@ -46,6 +46,8 @@ namespace LibConf.Providers
             get => Path.Combine(_directory, Name);
         }
 
+        public bool StrictMode { get; set; }
+
         #region IO
         public abstract void Save();
         public abstract void Load();

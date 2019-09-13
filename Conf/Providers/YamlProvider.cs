@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using YamlDotNet.Serialization;
+using LibConf.Exceptions;
 using LibConf.Yaml;
 using LibConf.Utils;
 
@@ -148,7 +149,8 @@ namespace LibConf.Providers
             }
             else
             {
-                return default;
+                if (StrictMode) throw new IncorrectTypeException();
+                else return default;
             }
         }
 

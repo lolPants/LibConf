@@ -3,6 +3,7 @@ using IniParser.Exceptions;
 using IniParser.Model;
 using IniParser.Model.Configuration;
 using IniParser.Parser;
+using LibConf.Exceptions;
 using LibConf.Utils;
 
 namespace LibConf.Providers
@@ -96,9 +97,13 @@ namespace LibConf.Providers
             string sect = section ?? _name;
             string value = _iniData[sect][key];
 
-            if (value != null && bool.TryParse(value, out bool val))
+            if (value != null)
             {
-                return val;
+                bool parsed = bool.TryParse(value, out bool val);
+
+                if (parsed) return val;
+                else if (StrictMode == false) return null;
+                else throw new IncorrectTypeException($"Cannont convert \"{value}\" to bool");
             }
             else if (defaultValue != null)
             {
@@ -119,9 +124,13 @@ namespace LibConf.Providers
             string sect = section ?? _name;
             string value = _iniData[sect][key];
 
-            if (value != null && int.TryParse(value, out int val))
+            if (value != null)
             {
-                return val;
+                bool parsed = int.TryParse(value, out int val);
+
+                if (parsed) return val;
+                else if (StrictMode == false) return null;
+                else throw new IncorrectTypeException($"Cannont convert \"{value}\" to Int32");
             }
             else if (defaultValue != null)
             {
@@ -142,9 +151,13 @@ namespace LibConf.Providers
             string sect = section ?? _name;
             string value = _iniData[sect][key];
 
-            if (value != null && float.TryParse(value, out float val))
+            if (value != null)
             {
-                return val;
+                bool parsed = float.TryParse(value, out float val);
+
+                if (parsed) return val;
+                else if (StrictMode == false) return null;
+                else throw new IncorrectTypeException($"Cannont convert \"{value}\" to float");
             }
             else if (defaultValue != null)
             {

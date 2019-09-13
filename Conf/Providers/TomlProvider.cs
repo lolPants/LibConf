@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Nett;
+using LibConf.Exceptions;
 
 namespace LibConf.Providers
 {
@@ -66,6 +68,11 @@ namespace LibConf.Providers
                     _tomlData[section] = Toml.Create();
                     _table = _tomlData.Get<TomlTable>(section);
                 }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
+                }
 
                 try
                 {
@@ -77,6 +84,11 @@ namespace LibConf.Providers
                         return defaultValue;
 
                     return null;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
                 }
             }
         }
@@ -95,6 +107,11 @@ namespace LibConf.Providers
                         return defaultValue;
 
                     return null;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
                 }
             }
             else
@@ -121,6 +138,11 @@ namespace LibConf.Providers
 
                     return null;
                 }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
+                }
             }
         }
 
@@ -138,6 +160,11 @@ namespace LibConf.Providers
                         return defaultValue;
 
                     return null;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
                 }
             }
             else
@@ -164,6 +191,11 @@ namespace LibConf.Providers
 
                     return null;
                 }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
+                }
             }
         }
 
@@ -181,6 +213,11 @@ namespace LibConf.Providers
                         return defaultValue;
 
                     return null;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
                 }
             }
             else
@@ -206,6 +243,11 @@ namespace LibConf.Providers
                         return defaultValue;
 
                     return null;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    if (StrictMode) throw new IncorrectTypeException(ex.Message);
+                    else return null;
                 }
             }
         }
