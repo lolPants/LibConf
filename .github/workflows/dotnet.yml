@@ -6,9 +6,17 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Setup MSBuild
+      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Install dependencies
+      run: msbuild -t:restore
+    - name: Build project
+      run: msbuild Conf/LibConf.csproj /t:Build /p:Configuration=Release
+    - name: Cleanup release
+      shell: bash
+      run: find "Conf/bin/Release" -type f ! -name "LibConf.*" -delete
+    - name: Upload DLLs
+      uses: actions/upload-artifact@v1
       with:
-        dotnet-version: 2.2.108
-    - name: Build with dotnet
-      run: dotnet build Conf --configuration Release
+        name: LibConf-${{ github.sha }}
+        path: ./Conf/bin/Release
