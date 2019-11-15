@@ -136,6 +136,16 @@ namespace LibConf.Providers
                 {
                     return (T)value;
                 }
+                else if (typeof(T) == typeof(float?) && type == typeof(int))
+                {
+                    object retVal = null;
+                    try
+                    {
+                        retVal = Convert.ToSingle(value);
+                    }
+                    catch { }
+                    return (T)retVal;
+                }
             }
             catch (KeyNotFoundException) { }
 
