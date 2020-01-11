@@ -1,10 +1,10 @@
+using System.IO;
 using IniParser;
 using IniParser.Exceptions;
 using IniParser.Model;
 using IniParser.Model.Configuration;
 using IniParser.Parser;
 using LibConf.Exceptions;
-using LibConf.Utils;
 
 namespace LibConf.Providers
 {
@@ -40,7 +40,7 @@ namespace LibConf.Providers
         {
             _dirty = true;
 
-            IOUtils.EnsureDirectory(_directory);
+            Directory.CreateDirectory(_directory);
             _parser.WriteFile(Filepath, _iniData);
 
             _dirty = false;

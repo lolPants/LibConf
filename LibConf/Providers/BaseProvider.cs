@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using LibConf.Utils;
 
 namespace LibConf.Providers
 {
@@ -53,6 +52,21 @@ namespace LibConf.Providers
         public abstract void Load();
         public Action FileModified { get; set; }
 
+        protected bool IsFileReady(string path)
+        {
+            try
+            {
+                using (var file = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    return true;
+                }
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+        }
+
         protected void OnFileChange(object _, FileSystemEventArgs e)
         {
             if (e.FullPath != Filepath)
@@ -61,7 +75,7 @@ namespace LibConf.Providers
             if (_dirty)
                 return;
 
-            if (!IOUtils.IsFileReady(e.FullPath))
+            if (IsFileReady(e.FullPath) == false)
                 return;
 
             FileModified?.Invoke();

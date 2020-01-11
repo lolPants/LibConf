@@ -11,12 +11,17 @@ jobs:
     - name: Install dependencies
       run: msbuild -t:restore
     - name: Build project
-      run: msbuild Conf/LibConf.csproj /t:Build /p:Configuration=Release
-    - name: Cleanup release
+      run: msbuild LibConf/LibConf.csproj /t:Build /p:Configuration=Release
+    - name: Prepare artifact
+      if: contains(github.ref, 'refs/tags/') == false
       shell: bash
-      run: find "Conf/bin/Release" -type f ! -name "LibConf.*" -delete
+      run: |
+        find "LibConf/bin/Release/netstandard2.0" -type f ! -name "LibConf.*" -delete
+        find "LibConf/bin/Release/netstandard2.0" -type f -name "*.deps.json" -delete
+        cp "LICENSE" "LibConf/bin/Release/netstandard2.0/LICENSE.LibConf.txt"
     - name: Upload DLLs
+      if: contains(github.ref, 'refs/tags/') == false
       uses: actions/upload-artifact@v1
       with:
         name: LibConf-${{ github.sha }}
-        path: ./Conf/bin/Release
+        path: ./LibConf/bin/Release/netstandard2.0

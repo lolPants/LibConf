@@ -4,14 +4,13 @@ using System.IO;
 using YamlDotNet.Serialization;
 using LibConf.Exceptions;
 using LibConf.Yaml;
-using LibConf.Utils;
 
 namespace LibConf.Providers
 {
     internal sealed class YamlProvider : BaseProvider
     {
-        private IDeserializer _deserializer;
-        private ISerializer _serializer;
+        private readonly IDeserializer _deserializer;
+        private readonly ISerializer _serializer;
         private Dictionary<object, object> _data;
 
         public YamlProvider(string directory, string name) : base(directory, name)
@@ -34,7 +33,7 @@ namespace LibConf.Providers
         {
             _dirty = true;
 
-            IOUtils.EnsureDirectory(_directory);
+            Directory.CreateDirectory(_directory);
             using (StreamWriter file = File.CreateText(Filepath))
             {
                 _serializer.Serialize(file, _data);

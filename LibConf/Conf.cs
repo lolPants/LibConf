@@ -1,5 +1,5 @@
+using System.IO;
 using LibConf.Providers;
-using LibConf.Utils;
 
 namespace LibConf
 {
@@ -17,7 +17,7 @@ namespace LibConf
         /// <returns>Config provider</returns>
         public static IConfigProvider CreateConfig(ConfigType type, string directory, string name)
         {
-            IOUtils.EnsureDirectory(directory);
+            Directory.CreateDirectory(directory);
 
             switch (type)
             {
