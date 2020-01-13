@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <IncludeSymbols>true</IncludeSymbols>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>lolPants</Authors>
     <Company>Jack Baron DEV</Company>
     <Description>.NET framework configuration library that's somehow cooler than the rest</Description>
