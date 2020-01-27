@@ -12,12 +12,12 @@ jobs:
         echo "::add-path::C:\Program Files\Git\mingw64\bin"
         echo "::add-path::C:\Program Files\Git\usr\bin"
         echo "::add-path::C:\Program Files\Git\bin"
-    - name: Setup MSBuild
-      uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Install dependencies
-      run: msbuild -t:restore
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.100'
     - name: Build project
-      run: msbuild LibConf/LibConf.csproj /t:Build /p:Configuration=Release
+      run: dotnet build -c release LibConf/LibConf.csproj
     - name: Prepare artifact
       if: contains(github.ref, 'refs/tags/') == false
       shell: bash
