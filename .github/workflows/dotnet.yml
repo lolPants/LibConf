@@ -5,17 +5,11 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
-    # Set Path workaround for https://github.com/actions/virtual-environments/issues/263
-    - name: "Temp step to Set Path for Windows"
-      run: |
-        echo "::add-path::C:\Program Files\Git\mingw64\bin"
-        echo "::add-path::C:\Program Files\Git\usr\bin"
-        echo "::add-path::C:\Program Files\Git\bin"
-    - name: Setup dotnet
+    - uses: actions/checkout@v2
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.100'
+        dotnet-version: '3.1.x'
     - name: Build project
       run: dotnet build -c release LibConf/LibConf.csproj
     - name: Prepare artifact
@@ -27,7 +21,7 @@ jobs:
         cp "LICENSE" "LibConf/bin/Release/netstandard2.0/LICENSE.LibConf.txt"
     - name: Upload DLLs
       if: contains(github.ref, 'refs/tags/') == false
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        name: LibConf-${{ github.sha }}
-        path: ./LibConf/bin/Release/netstandard2.0
+        name: LibConf
+        path: ./LibConf/bin/Release/netstandard2.0/
